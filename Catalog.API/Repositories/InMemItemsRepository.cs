@@ -1,4 +1,5 @@
-﻿using Catalog.API.Models;
+﻿using Catalog.API.DTO;
+using Catalog.API.Models;
 
 namespace Catalog.API.Repositories
 {
@@ -17,5 +18,20 @@ namespace Catalog.API.Repositories
 
         public Item GetItem(Guid guid)
             => items.Where(x => x.Id == guid).SingleOrDefault() ?? new();
+
+        public void CreateItem(CreateItemDTO item)
+            => items.Add(item.CreateItemFromDTO());
+
+        public void UdpateItem(Item item)
+        {
+            var index = items.FindIndex(x => x.Id == item.Id);
+            items[index] = item;
+        }
+
+        public void DeleteItem(Guid guid)
+        {
+            var index = items.FindIndex(x => x.Id == guid);
+            items.RemoveAt(index);
+        }
     }
 }
