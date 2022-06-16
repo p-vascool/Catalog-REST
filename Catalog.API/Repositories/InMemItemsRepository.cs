@@ -3,7 +3,7 @@ using Catalog.API.Models;
 
 namespace Catalog.API.Repositories
 {
-    public class InMemItemsRepository : IInMemItemsRepository
+    public class InMemItemsRepository : IItemsRepository
     {
         private readonly List<Item> items = new()
         {

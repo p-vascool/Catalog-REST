@@ -3,7 +3,7 @@ using Catalog.API.Models;
 
 namespace Catalog.API.Repositories
 {
-    public interface IInMemItemsRepository
+    public interface IItemsRepository
     {
         IEnumerable<Item> GetItems();
         Item GetItem(Guid guid);
