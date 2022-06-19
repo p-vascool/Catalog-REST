@@ -5,10 +5,10 @@ namespace Catalog.API.Repositories
 {
     public interface IItemsRepository
     {
-        IEnumerable<Item> GetItems();
-        Item GetItem(Guid guid);
-        void CreateItem(CreateItemDTO item);
-        void UdpateItem(Item item);
-        void DeleteItem(Guid guid);
+        Task<IEnumerable<Item>> GetItemsAsync();
+        Task<Item> GetItemAsync(Guid guid);
+        Task CreateItemAsync(CreateItemDTO item);
+        Task UpdateItemAsync(Item item);
+        Task DeleteItemAsync(Guid guid);
     }
 }

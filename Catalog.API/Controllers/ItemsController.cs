@@ -14,26 +14,29 @@ namespace Catalog.API.Controllers
             => _repository = repository;
 
         [HttpGet]
-        public IEnumerable<ItemDTO> GetItems()
-            => _repository
-               .GetItems()
+        public async Task<IEnumerable<ItemDTO>> GetItemsAsync()
+            => (await _repository
+               .GetItemsAsync())
                .Select(item => item.AsDTO());
 
         [HttpGet("{id}")]
-        public ItemDTO GetItem(Guid id)
-            => _repository.GetItem(id).AsDTO();
+        public async Task<ItemDTO> GetItemAsync(Guid id)
+        {
+            var item = await _repository.GetItemAsync(id);
+            return item.AsDTO();
+        }
 
         [HttpPost]
-        public IActionResult CreateItem(CreateItemDTO itemDTO)
+        public async Task<IActionResult> CreateItemAsync(CreateItemDTO itemDTO)
         {
-            _repository.CreateItem(itemDTO);
+            await _repository.CreateItemAsync(itemDTO);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateItem(Guid id, UpdateItemDTO updateItemDTO)
+        public async Task<IActionResult> UpdateItemAsync(Guid id, UpdateItemDTO updateItemDTO)
         {
-            var existingItem = _repository.GetItem(id);
+            var existingItem = await _repository.GetItemAsync(id);
             if (existingItem is null)
                 return NotFound();
 
@@ -43,15 +46,15 @@ namespace Catalog.API.Controllers
                 Price = updateItemDTO.Price
             };
 
-            _repository.UdpateItem(updatedItem);
+            await _repository.UpdateItemAsync(updatedItem);
 
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteItem(Guid id)
+        public async Task<IActionResult> DeleteItemAsync(Guid id)
         {
-            _repository.DeleteItem(id);
+            await _repository.DeleteItemAsync(id);
             return Ok();
         }
     }
